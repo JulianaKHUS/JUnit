@@ -3,35 +3,26 @@ package business;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RussianPhoneValidatorTest {
-    static String[] validPhones;
+    @ParameterizedTest
 
-    @BeforeAll
-    static void setUp() {
-        validPhones = new String[] {
-                "89999297845",
-                "89999297845",
-                "89999297845",
-                "89999297845",
-                "+79999297845"
-        };
-    }
+    @CsvSource(value =  {
+                "89999297845, true",
+                "89999297845, true",
+                "123654, false",
+                "8754444, false",
+                "+79999297845, true"
+    })
 
 
     @Test
-    void validatePHONENUMBER() {
-        for (String validPhone : validPhones) {
-            Assertions.assertTrue(RussianPhoneValidator.validatePHONENUMBER(validPhone));
+    void validatePhoneNumber(String validPhone, boolean expected) {
+            Assertions.assertEquals(expected, RussianPhoneValidator.validatePhoneNumber(validPhone));
         }
-        //when
-        //boolean result1 = RussianPhoneValidator.validatePHONENUMBER(validPhone1);
-        //boolean result2 = RussianPhoneValidator.validatePHONENUMBER(validPhone2);
 
-        //then
-        //Assertions.assertTrue(result1);
-        //Assertions.assertTrue(result2);
     }
-}
